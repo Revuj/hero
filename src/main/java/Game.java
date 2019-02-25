@@ -10,6 +10,8 @@ import java.io.IOException;
 public class Game {
     private Screen screen;
     private Hero hero;
+    private Arena arena;
+
     public Game() throws IOException {
         Terminal terminal = new DefaultTerminalFactory().createTerminal();
         screen = new TerminalScreen(terminal);
@@ -17,51 +19,23 @@ public class Game {
         screen.startScreen();             // screens must be started
         screen.doResizeIfNecessary();   // resize screen if necessary
         hero = new Hero(10, 10);
+        arena = new Arena(hero);
     }
 
     private void draw() throws IOException {
         screen.clear();
-        hero.draw(screen);
+        arena.draw(screen);
         screen.refresh();
     }
 
-    private void processKey(KeyStroke key) {
-        System.out.println(key);
-    }
-
-    private void moveHero(Position position) {
-        hero.setPosition(position);
-    }
 
     public int run() throws IOException {
         draw();
         KeyStroke key = screen.readInput();
-        if (key.getKeyType() == KeyType.Character) {
-            char character = key.getCharacter();
-            switch(character) {
-                case 'w':
-                    moveHero(hero.moveUp());
-                    break;
-                case 'a':
-                    moveHero(hero.moveLeft());
-                    break;
-                case 's':
-                    moveHero(hero.moveDown());
-                    break;
-                case 'd':
-                    moveHero(hero.moveRight());
-                    break;
-                case 'q':
-                    screen.close();
-                    break;
-            }
+        int ret = arena.processKey(key);
+        if (ret == 2) {
+            screen.close();
         }
-        else if (key.getKeyType() == KeyType.EOF) {
-            return 1;
-        }
-        processKey(key);
-        return 0;
+        return ret;
     }
-
-
 }
