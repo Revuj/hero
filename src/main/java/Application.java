@@ -18,6 +18,8 @@ public class Application {
             screen.doResizeIfNecessary();   // resize screen if necessary
             screen.clear();
             screen.setCharacter(10, 10, new TextCharacter('X'));
+            screen.setCharacter(11, 10, new TextCharacter('Y'));
+            //screen.setCharacter(31, 50, new TextCharacter('O'));
             screen.refresh();
         } catch (IOException e) {
             e.printStackTrace();
