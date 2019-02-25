@@ -29,6 +29,10 @@ public class Game {
         System.out.println(key);
     }
 
+    private void moveHero(Position position) {
+        hero.setPosition(position);
+    }
+
     public int run() throws IOException {
         draw();
         KeyStroke key = screen.readInput();
@@ -36,16 +40,16 @@ public class Game {
             char character = key.getCharacter();
             switch(character) {
                 case 'w':
-                    hero.moveUp();
+                    moveHero(hero.moveUp());
                     break;
                 case 'a':
-                    hero.moveLeft();
+                    moveHero(hero.moveLeft());
                     break;
                 case 's':
-                    hero.moveDown();
+                    moveHero(hero.moveDown());
                     break;
                 case 'd':
-                    hero.moveRight();
+                    moveHero(hero.moveRight());
                     break;
                 case 'q':
                     screen.close();
