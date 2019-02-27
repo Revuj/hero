@@ -5,20 +5,21 @@ import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Arena {
     private int width;
     private int height;
     private Hero hero;
     private List<Walls> walls;
+    private List<Coin> coins;
 
     public Arena(Hero hero, int width, int height) {
         this.hero = hero;
         this.width = width;
         this.height = height;
         this.walls = createWalls();
+        this.coins = createCoins();
     }
 
     private List<Walls> createWalls() {
@@ -37,12 +38,23 @@ public class Arena {
         return walls;
     }
 
+    private List<Coin> createCoins() {
+        Random random = new Random();
+        ArrayList<Coin> coins = new ArrayList<>();
+        for (int i = 0; i < 5; i++)
+            coins.add(new Coin(random.nextInt(width - 2) + 1, random.nextInt(height - 2) + 1));
+        return coins;
+    }
+
     public void draw(TextGraphics graphics) {
         graphics.setBackgroundColor(TextColor.Factory.fromString("#336699"));
         graphics.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(width, height), ' ');
-        hero.draw(graphics);
+
         for (Walls wall : walls)
             wall.draw(graphics);
+        for (Coin coin : coins)
+            coin.draw(graphics);
+        hero.draw(graphics);
     }
 
     public int processKey(KeyStroke key) {
@@ -79,9 +91,23 @@ public class Arena {
             return true;
     }
 
+    private void retrieveCoins() {
+
+        Position heroPos = hero.getPosition();
+
+        for (Iterator<Coin> it = coins.listIterator(); it.hasNext();) {
+            if (heroPos.equals(it.next().getPosition())) {
+                it.remove();
+            }
+        }
+    }
+
     private void moveHero(Position position) {
 
-        if (canHeroMove(position))
+        if (canHeroMove(position)) {
             hero.setPosition(position);
+            retrieveCoins();
+        }
     }
+
 }
