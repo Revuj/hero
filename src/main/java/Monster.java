@@ -3,9 +3,9 @@ import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 
-public class Hero extends Element{
+public class Monster extends Element {
 
-    public Hero(int x, int y) {
+    public Monster(int x, int y) {
         super(x, y);
     }
 
@@ -27,8 +27,8 @@ public class Hero extends Element{
 
 
     public void draw(TextGraphics graphics) {
-        graphics.setForegroundColor(TextColor.Factory.fromString("#FF0033"));
+        graphics.setForegroundColor(TextColor.Factory.fromString("#1F2133"));
         graphics.enableModifiers(SGR.BOLD);
-        graphics.putString(new TerminalPosition(this.getPosition().getX(), this.getPosition().getY()), "X");
+        graphics.putString(new TerminalPosition(this.getPosition().getX(), this.getPosition().getY()), "M");
     }
 }

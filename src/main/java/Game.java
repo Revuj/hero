@@ -38,6 +38,7 @@ public class Game {
         int ret = arena.processKey(key);
         if (ret == 2) {
             screen.close();
+            System.out.println("Game Over");
         }
         return ret;
     }
