@@ -22,7 +22,6 @@ public class Game {
         screen.startScreen();             // screens must be started
         screen.doResizeIfNecessary();   // resize screen if necessary
         arena = new Arena(new Hero(5, 5), 80, 24);
-        TextGraphics graphics = screen.newTextGraphics();
     }
 
     private void draw() throws IOException {
@@ -34,6 +33,7 @@ public class Game {
 
     public int run() throws IOException {
         draw();
+        arena.spawnCoin();
         KeyStroke key = screen.readInput();
         int ret = arena.processKey(key);
         if (ret == 2) {

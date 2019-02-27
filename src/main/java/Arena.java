@@ -110,4 +110,10 @@ public class Arena {
         }
     }
 
+    public void spawnCoin() {
+        Random random = new Random();
+        if (coins.size() < 8 && random.nextInt(30) == 25) {
+            coins.add(new Coin(random.nextInt(width - 2) + 1, random.nextInt(height - 2) + 1));
+        }
+    }
 }
